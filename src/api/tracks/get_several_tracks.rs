@@ -2,7 +2,6 @@ use crate::api::prelude::*;
 
 /// Get Spotify catalog information for several tracks based on their Spotify IDs.
 #[derive(Debug, Clone)]
-// #[endpoint(method = GET, path = "tracks")]
 pub struct GetSeveralTracks {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the tracks.
     pub ids: Vec<String>,

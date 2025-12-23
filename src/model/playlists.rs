@@ -4,6 +4,10 @@ use super::{
 };
 use serde::{Deserialize, Serialize};
 
+/// Full playlist information from the Spotify catalog.
+///
+/// Contains complete details about a playlist including its tracks (when the
+/// `page_items` feature is enabled), description, and follower count.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Playlist {
     /// true if the owner allows other users to modify the playlist.
@@ -56,6 +60,10 @@ pub struct Playlist {
     pub uri: String,
 }
 
+/// Simplified playlist information with basic details only.
+///
+/// A lighter version of [`Playlist`] that omits follower count and includes
+/// only a track reference instead of the full track list.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedPlaylist {
     /// true if the owner allows other users to modify the playlist.
@@ -140,6 +148,10 @@ impl From<Playlist> for SimplifiedPlaylist {
     }
 }
 
+/// A track or episode within a playlist.
+///
+/// Contains information about when the item was added, who added it,
+/// whether it's a local file, and the track/episode details.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PlaylistTrack {
     /// The date and time the track or episode was added.
@@ -165,6 +177,7 @@ pub struct PlaylistTrack {
     pub track: TrackItem,
 }
 
+/// Information about the user who added a track or episode to a playlist.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct AddedBy {
     /// Known public external URLs for this user.
@@ -188,6 +201,10 @@ pub struct AddedBy {
     pub uri: String,
 }
 
+/// A playlist snapshot identifier.
+///
+/// Returned after modifying a playlist to identify the specific version.
+/// Can be used in subsequent requests to target a specific playlist state.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SnapshotId {
     /// The version identifier for the current playlist.

@@ -1,4 +1,4 @@
-use crate::api::{Endpoint, prelude::*};
+use crate::api::prelude::*;
 use serde_json::json;
 
 /// Create a playlist for a Spotify user.

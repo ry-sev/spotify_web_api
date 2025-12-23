@@ -1,4 +1,29 @@
 //! Spotify Web API endpoints.
+//!
+//! This module contains endpoint definitions for all Spotify Web API operations,
+//! organized by resource type (albums, artists, playlists, etc.).
+//!
+//! # Usage
+//!
+//! Each endpoint is represented as a struct that implements the [`Endpoint`] trait.
+//! Endpoints can be executed using the [`Query`] or [`AsyncQuery`] traits.
+//!
+//! # Modules
+//!
+//! - [`albums`] - Album-related endpoints
+//! - [`artists`] - Artist-related endpoints
+//! - [`audiobooks`] - Audiobook-related endpoints
+//! - [`categories`] - Browse category endpoints
+//! - [`chapters`] - Audiobook chapter endpoints
+//! - [`episodes`] - Podcast episode endpoints
+//! - [`genres`] - Genre-related endpoints
+//! - [`markets`] - Market availability endpoints
+//! - [`player`] - Playback control endpoints
+//! - [`playlists`] - Playlist-related endpoints
+//! - [`search`] - Search endpoints
+//! - [`shows`] - Podcast show endpoints
+//! - [`tracks`] - Track-related endpoints
+//! - [`users`] - User profile and follow endpoints
 
 mod client;
 mod endpoint;

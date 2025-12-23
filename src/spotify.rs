@@ -18,10 +18,19 @@ use url::Url;
 
 const BASE_API_URL: &str = "https://api.spotify.com/v1/";
 
+/// Type alias for a blocking Spotify client using Authorization Code with PKCE flow.
 pub type SpotifyPKCE = Spotify<AuthCodePKCE>;
+
+/// Type alias for a blocking Spotify client using Client Credentials flow.
 pub type SpotifyClientCredentials = Spotify<ClientCredentials>;
+
+/// Type alias for an async Spotify client using Authorization Code with PKCE flow.
 pub type AsyncSpotifyPKCE = AsyncSpotify<AuthCodePKCE>;
+
+/// Type alias for an async Spotify client using Client Credentials flow.
 pub type AsyncSpotifyClientCredentials = AsyncSpotify<ClientCredentials>;
+
+/// A specialized `Result` type for Spotify API operations.
 pub type SpotifyResult<T> = Result<T, SpotifyError>;
 
 /// Represents errors that can occur during communication with the Spotify API.
@@ -136,6 +145,17 @@ impl SpotifyError {
     }
 }
 
+/// A blocking client for interacting with the Spotify Web API.
+///
+/// This struct provides synchronous methods for making API requests to Spotify.
+/// It is parameterized by an authentication flow type `A` which determines how
+/// the client authenticates with the Spotify API.
+///
+/// For most use cases, prefer using the type aliases:
+/// - [`SpotifyPKCE`] for user-authorized access (Authorization Code with PKCE)
+/// - [`SpotifyClientCredentials`] for app-only access (Client Credentials flow)
+///
+/// See [`AsyncSpotify`] for an async version of this client.
 pub struct Spotify<A>
 where
     A: AuthFlow,
@@ -575,6 +595,17 @@ where
     }
 }
 
+/// An async client for interacting with the Spotify Web API.
+///
+/// This struct provides asynchronous methods for making API requests to Spotify.
+/// It is parameterized by an authentication flow type `A` which determines how
+/// the client authenticates with the Spotify API.
+///
+/// For most use cases, prefer using the type aliases:
+/// - [`AsyncSpotifyPKCE`] for user-authorized access (Authorization Code with PKCE)
+/// - [`AsyncSpotifyClientCredentials`] for app-only access (Client Credentials flow)
+///
+/// See [`Spotify`] for a blocking version of this client.
 pub struct AsyncSpotify<A>
 where
     A: AsyncAuthFlow,

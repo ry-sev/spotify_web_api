@@ -1,18 +1,25 @@
 use super::{Copyright, ExternalUrls, Image, ItemType, Market, Page, SimplifiedChapter};
 use serde::{Deserialize, Serialize};
 
+/// An audiobook author.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Author {
     /// The name of the author.
     pub name: String,
 }
 
+/// An audiobook narrator.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Narrator {
     /// The name of the Narrator.
     pub name: String,
 }
 
+/// Full audiobook information from the Spotify catalog.
+///
+/// Contains complete details about an audiobook including its chapters
+/// (when the `page_items` feature is enabled), authors, narrators,
+/// copyright information, and available markets.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Audiobook {
     /// The author(s) for the audiobook.
@@ -84,6 +91,10 @@ pub struct Audiobook {
     pub chapters: Page<SimplifiedChapter>,
 }
 
+/// Simplified audiobook information with basic details only.
+///
+/// A lighter version of [`Audiobook`] that omits the chapters page.
+/// Commonly returned when audiobooks are nested within other objects.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedAudiobook {
     /// The author(s) for the audiobook.

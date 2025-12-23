@@ -4,6 +4,7 @@ use super::{
 };
 use serde::{Deserialize, Serialize};
 
+/// The type of an album.
 #[derive(Debug, Clone, Deserialize, Serialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum AlbumType {
@@ -49,6 +50,7 @@ impl AlbumType {
     }
 }
 
+/// A full album object from the Spotify catalog.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Album {
     /// The type of the album.

@@ -1,6 +1,10 @@
 use super::{Icon, Page};
 use serde::{Deserialize, Serialize};
 
+/// A category used to tag items in Spotify.
+///
+/// Categories appear in the Spotify player's "Browse" tab and can be used
+/// to discover playlists and other content grouped by theme or genre.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Category {
     /// A link to the Web API endpoint returning full details of the category.

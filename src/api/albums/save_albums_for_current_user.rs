@@ -2,12 +2,12 @@ use crate::api::prelude::*;
 
 /// Save one or more albums to the current user's 'Your Music' library.
 #[derive(Debug, Clone)]
-pub struct SaveAlbumsforCurrentUser {
+pub struct SaveAlbumsForCurrentUser {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the albums.
     pub ids: Vec<String>,
 }
 
-impl<T, I> From<I> for SaveAlbumsforCurrentUser
+impl<T, I> From<I> for SaveAlbumsForCurrentUser
 where
     I: IntoIterator<Item = T>,
     T: Into<String>,
@@ -19,7 +19,7 @@ where
     }
 }
 
-impl Endpoint for SaveAlbumsforCurrentUser {
+impl Endpoint for SaveAlbumsForCurrentUser {
     fn method(&self) -> Method {
         Method::PUT
     }
@@ -55,7 +55,7 @@ mod tests {
         let client = SingleTestClient::new_raw(endpoint, "");
 
         let endpoint =
-            SaveAlbumsforCurrentUser::from(["7F50uh7oGitmAEScRKV6pD", "27XW2QTeqZGOKlm2Dt0PvN"]);
+            SaveAlbumsForCurrentUser::from(["7F50uh7oGitmAEScRKV6pD", "27XW2QTeqZGOKlm2Dt0PvN"]);
 
         api::ignore(endpoint).query(&client).unwrap();
     }

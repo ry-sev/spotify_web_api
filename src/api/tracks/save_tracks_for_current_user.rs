@@ -4,12 +4,12 @@ use crate::api::prelude::*;
 ///
 /// This API endpoint is in beta and could change without warning. Please share any feedback that you have, or issues that you discover, in the [Spotify developer community forum](https://community.spotify.com/t5/Spotify-for-Developers/bd-p/Spotify_Developer).
 #[derive(Debug, Clone)]
-pub struct SaveTracksforCurrentUser {
+pub struct SaveTracksForCurrentUser {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the tracks.
     pub ids: Vec<String>,
 }
 
-impl<T, I> From<I> for SaveTracksforCurrentUser
+impl<T, I> From<I> for SaveTracksForCurrentUser
 where
     I: IntoIterator<Item = T>,
     T: Into<String>,
@@ -21,7 +21,7 @@ where
     }
 }
 
-impl Endpoint for SaveTracksforCurrentUser {
+impl Endpoint for SaveTracksForCurrentUser {
     fn method(&self) -> Method {
         Method::PUT
     }
@@ -57,7 +57,7 @@ mod tests {
         let client = SingleTestClient::new_raw(endpoint, "");
 
         let endpoint =
-            SaveTracksforCurrentUser::from(["39joRyXYyjSpI6nKZHyWmH", "5mPY98zmeNSp8cmrRtdUW3"]);
+            SaveTracksForCurrentUser::from(["39joRyXYyjSpI6nKZHyWmH", "5mPY98zmeNSp8cmrRtdUW3"]);
 
         api::ignore(endpoint).query(&client).unwrap();
     }

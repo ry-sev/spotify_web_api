@@ -5,37 +5,51 @@ use super::{
 use serde::{Deserialize, Serialize};
 
 /// Spotify catalog information about albums, artists, playlists, tracks, shows, episodes or audiobooks.
+///
+/// Contains paginated results for each type of item that was searched for.
+/// Only the types requested in the search will have values; others will be `None`.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SearchResults {
+    /// Matching playlists, if playlists were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub playlists: Option<Page<Option<SimplifiedPlaylist>>>,
 
+    /// Matching albums, if albums were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub albums: Option<Page<Option<SimplifiedAlbum>>>,
 
+    /// Matching artists, if artists were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub artists: Option<Page<Option<Artist>>>,
 
+    /// Matching tracks, if tracks were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub tracks: Option<Page<Option<Track>>>,
 
+    /// Matching shows (podcasts), if shows were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub shows: Option<Page<Option<SimplifiedShow>>>,
 
+    /// Matching episodes, if episodes were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub episodes: Option<Page<Option<SimplifiedEpisode>>>,
 
+    /// Matching audiobooks, if audiobooks were included in the search.
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub audiobooks: Option<Page<Option<SimplifiedAudiobook>>>,
 }
 
+/// The type of item to search for in the Spotify catalog.
+///
+/// Used with the search endpoint to specify which types of items to include
+/// in the search results.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum SearchType {

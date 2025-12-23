@@ -1,6 +1,7 @@
 use super::{ContextType, Cursors, EpisodeId, ExternalUrls, ItemType, Track, TrackId, TrackItem};
 use serde::{Deserialize, Serialize};
 
+/// A playback device (speaker, phone, computer, etc.).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Device {
     /// The device ID. This ID is unique and persistent to some extent.
@@ -32,12 +33,15 @@ pub struct Device {
     pub supports_volume: bool,
 }
 
+/// A list of available playback devices.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Devices {
+    /// The list of devices.
     #[serde(default)]
     pub devices: Vec<Device>,
 }
 
+/// The repeat mode state for playback.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum RepeatState {
@@ -57,6 +61,7 @@ impl std::fmt::Display for RepeatState {
     }
 }
 
+/// The playback context (album, playlist, artist, etc.).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Context {
     /// The object type.
@@ -73,6 +78,7 @@ pub struct Context {
     pub uri: String,
 }
 
+/// The type of the currently playing item.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum CurrentlyPlayingType {
@@ -82,6 +88,7 @@ pub enum CurrentlyPlayingType {
     Unknown,
 }
 
+/// The current playback state including device, track, and progress.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PlaybackState {
     /// The device that is currently active.
@@ -115,14 +122,18 @@ pub struct PlaybackState {
     pub actions: Actions,
 }
 
+/// Available playback actions in the current context.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Actions {
+    /// Interrupting playback.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub interrupting_playback: Option<bool>,
 
+    /// Pausing playback.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub pausing: Option<bool>,
 
+    /// Resuming playback.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub resuming: Option<bool>,
 
@@ -150,11 +161,12 @@ pub struct Actions {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub toggling_repeat_track: Option<bool>,
 
-    /// Transfering playback between devices.
+    /// Transferring playback between devices.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub transferring_playback: Option<bool>,
 }
 
+/// Information about the currently playing track or episode.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct CurrentlyPlaying {
     /// The context object.
@@ -179,6 +191,7 @@ pub struct CurrentlyPlaying {
     pub actions: Actions,
 }
 
+/// A track in the user's play history.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct PlayHistory {
     /// The track the user listened to.
@@ -191,6 +204,7 @@ pub struct PlayHistory {
     pub context: Context,
 }
 
+/// A list of recently played tracks.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct RecentlyPlayedTracks {
     /// A link to the Web API endpoint returning the full result of the request.
@@ -208,9 +222,11 @@ pub struct RecentlyPlayedTracks {
     /// The total number of items available to return.
     pub total: Option<usize>,
 
+    /// The play history items.
     pub items: Vec<PlayHistory>,
 }
 
+/// The user's playback queue.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Queue {
     /// The currently playing track or episode.
@@ -220,6 +236,7 @@ pub struct Queue {
     pub queue: Vec<TrackItem>,
 }
 
+/// An offset for starting playback at a specific position or URI.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum Offset {
     Position(usize),
@@ -232,12 +249,14 @@ impl From<usize> for Offset {
     }
 }
 
+/// A time range for querying recently played tracks.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum QueryRange {
     Before(i64),
     After(i64),
 }
 
+/// An item that can be added to a playlist (track or episode).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PlaylistItem {
     Track(TrackId),

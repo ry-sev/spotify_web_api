@@ -62,21 +62,20 @@ fn handle_connection(mut stream: TcpStream) -> Option<String> {
 
     if let Some(request_line) = request.lines().next() {
         let mut parts = request_line.split_whitespace();
-        if let Some(method) = parts.next() {
-            if method == "GET" {
-                if let Some(url) = parts.next() {
-                    let response = format!(
-                        "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE html><html><head><title>{APP_NAME}</title></head><body><h1>{APP_NAME}</h1><p>Authorization successful. You can now close this tab and return to the application.</p></body></html>"
-                    );
+        if let Some(method) = parts.next()
+            && method == "GET"
+            && let Some(url) = parts.next()
+        {
+            let response = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n<!DOCTYPE html><html><head><title>{APP_NAME}</title></head><body><h1>{APP_NAME}</h1><p>Authorization successful. You can now close this tab and return to the application.</p></body></html>"
+            );
 
-                    let _ = stream.write_all(response.as_bytes());
-                    if let Err(e) = stream.flush() {
-                        eprintln!("Error flushing stream: {e:?}");
-                    }
-
-                    return Some(format!("http://127.0.0.1:{PORT}{url}"));
-                }
+            let _ = stream.write_all(response.as_bytes());
+            if let Err(e) = stream.flush() {
+                eprintln!("Error flushing stream: {e:?}");
             }
+
+            return Some(format!("http://127.0.0.1:{PORT}{url}"));
         }
     }
 

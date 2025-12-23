@@ -9,6 +9,20 @@ pub struct Raw<E> {
 }
 
 /// Return the raw data from the endpoint.
+///
+/// Use this when you need the raw bytes of the response instead of
+/// a deserialized type.
+///
+/// # Example
+///
+/// ```no_run
+/// use spotify_web_api::api::{raw, Query, albums::GetAlbum};
+///
+/// # fn example(client: &impl spotify_web_api::api::Client) {
+/// // Get raw JSON bytes
+/// let bytes: Vec<u8> = raw(GetAlbum::from("album_id")).query(client).unwrap();
+/// # }
+/// ```
 pub fn raw<E>(endpoint: E) -> Raw<E> {
     Raw { endpoint }
 }

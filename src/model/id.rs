@@ -1,5 +1,6 @@
 use thiserror::Error;
 
+/// Errors that can occur when parsing or validating Spotify IDs.
 #[derive(Debug, Clone, PartialEq, Eq, Error)]
 pub enum IdError {
     #[error("The ID is not in correct format.")]
@@ -9,6 +10,7 @@ pub enum IdError {
     InvalidLength { got: usize, expected: usize },
 }
 
+/// The type of a Spotify resource identified by an ID.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum IdType {
     User,
@@ -35,6 +37,10 @@ impl std::fmt::Display for IdType {
     }
 }
 
+/// A playback context type with its associated ID.
+///
+/// Represents items that can be used as a playback context (the source from
+/// which tracks are played), such as an album, artist, playlist, or show.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ContextType {
     Album(AlbumId),
@@ -79,12 +85,18 @@ impl From<ShowId> for ContextType {
 }
 
 macro_rules! impl_ids {
-    ($(($struct_name:ident, $id_type:ident, $type_name:expr)),* $(,)?) => {
+    ($(#[doc = $doc:literal] ($struct_name:ident, $id_type:ident, $type_name:expr)),* $(,)?) => {
         $(
+            #[doc = $doc]
             #[derive(Debug, Clone, PartialEq, Eq)]
             pub struct $struct_name(String);
 
             impl $struct_name {
+                /// Creates an ID from a base-62 Spotify identifier string.
+                ///
+                /// # Errors
+                /// Returns [`IdError::InvalidLength`] if the ID is not 22 characters.
+                /// Returns [`IdError::InvalidFormat`] if the ID contains non-alphanumeric characters.
                 pub fn from_id<S>(id: S) -> Result<Self, IdError> where S: Into<String> {
                     let id = id.into();
 
@@ -104,6 +116,11 @@ macro_rules! impl_ids {
                     }
                 }
 
+                /// Creates an ID from a Spotify URI string (e.g., `spotify:track:6rqhFgbbKwnb9MLmUQDhG6`).
+                ///
+                /// # Errors
+                /// Returns [`IdError::InvalidFormat`] if the URI doesn't have the expected prefix.
+                /// Returns [`IdError::InvalidLength`] if the extracted ID is not 22 characters.
                 pub fn from_uri<S>(uri: S) -> Result<Self, IdError> where S: Into<String> {
 					let uri = uri.into();
 					let prefix = format!("spotify:{}:", $type_name);
@@ -147,12 +164,19 @@ macro_rules! impl_ids {
 }
 
 impl_ids![
+    #[doc = "A validated Spotify playlist ID."]
     (PlaylistId, Playlist, "playlist"),
+    #[doc = "A validated Spotify track ID."]
     (TrackId, Track, "track"),
+    #[doc = "A validated Spotify album ID."]
     (AlbumId, Album, "album"),
+    #[doc = "A validated Spotify artist ID."]
     (ArtistId, Artist, "artist"),
+    #[doc = "A validated Spotify show (podcast) ID."]
     (ShowId, Show, "show"),
+    #[doc = "A validated Spotify episode ID."]
     (EpisodeId, Episode, "episode"),
+    #[doc = "A Spotify user ID."]
     (UserId, User, "user"),
 ];
 

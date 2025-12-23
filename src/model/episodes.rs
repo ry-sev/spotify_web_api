@@ -3,6 +3,10 @@ use super::{
 };
 use serde::{Deserialize, Serialize};
 
+/// Full episode (podcast episode) information from the Spotify catalog.
+///
+/// Contains complete details about an episode including its parent show,
+/// release date, duration, and playback resume point.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Episode {
     /// A description of the episode. HTML tags are stripped away from this field,
@@ -70,6 +74,10 @@ pub struct Episode {
     pub show: SimplifiedShow,
 }
 
+/// Simplified episode information with basic details only.
+///
+/// A lighter version of [`Episode`] that omits the parent show.
+/// Commonly returned when episodes are nested within other objects.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedEpisode {
     /// A description of the episode. HTML tags are stripped away from this field,
@@ -165,6 +173,9 @@ pub struct Episodes {
     pub episodes: Vec<Option<Episode>>,
 }
 
+/// An episode saved to the current user's library.
+///
+/// Contains the timestamp when the episode was saved and the episode details.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SavedEpisode {
     /// The date and time the episode was saved.

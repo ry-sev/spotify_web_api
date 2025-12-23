@@ -12,6 +12,20 @@ pub struct Ignore<E> {
 }
 
 /// Ignore the resulting data from an endpoint.
+///
+/// Use this when you only care about whether the request succeeded,
+/// not the response body (e.g., for PUT/DELETE operations).
+///
+/// # Example
+///
+/// ```no_run
+/// use spotify_web_api::api::{ignore, Query, player::PausePlayback};
+///
+/// # fn example(client: &impl spotify_web_api::api::Client) {
+/// // Pause playback without caring about the response
+/// ignore(PausePlayback::default()).query(client).unwrap();
+/// # }
+/// ```
 pub fn ignore<E>(endpoint: E) -> Ignore<E> {
     Ignore { endpoint }
 }

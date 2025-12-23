@@ -1,4 +1,21 @@
 //! Spotify Web API data model.
+//!
+//! This module contains all data types returned by the Spotify Web API,
+//! organized by resource type.
+//!
+//! # Feature Flags
+//!
+//! Some fields are conditionally compiled based on feature flags:
+//!
+//! - `markets` (default): Includes `available_markets` fields on tracks, albums, etc.
+//! - `page_items` (default): Includes `items` fields on paginated responses.
+//!
+//! # Common Types
+//!
+//! - [`Page`] - Paginated response wrapper
+//! - [`Image`] - Image metadata
+//! - [`ExternalUrls`] - External URL links (Spotify URLs)
+//! - [`Followers`] - Follower information
 
 pub mod albums;
 pub mod artists;

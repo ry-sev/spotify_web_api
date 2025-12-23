@@ -1,7 +1,4 @@
-use crate::{
-    api::{Endpoint, prelude::*},
-    model::PlaylistItem,
-};
+use crate::{api::prelude::*, model::PlaylistItem};
 
 /// Add one or more items to a user's playlist.
 #[derive(Debug, Clone)]

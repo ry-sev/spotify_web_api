@@ -1,4 +1,14 @@
-//! Types used in the authorization processs.
+//! Types used in the authorization process.
+//!
+//! This module provides types for OAuth 2.0 authorization flows supported by the Spotify API:
+//!
+//! - **Authorization Code with PKCE**: For applications that need to access user data.
+//!   Use [`crate::SpotifyPKCE`] or [`crate::AsyncSpotifyPKCE`].
+//! - **Client Credentials**: For server-to-server authentication without user context.
+//!   Use [`crate::SpotifyClientCredentials`] or [`crate::AsyncSpotifyClientCredentials`].
+//!
+//! See the [Spotify Authorization Guide](https://developer.spotify.com/documentation/web-api/concepts/authorization)
+//! for more information on choosing the right authorization flow.
 
 mod client_credentials;
 mod pkce;
@@ -17,6 +27,7 @@ use reqwest::blocking::Client;
 use thiserror::Error;
 use url::Url;
 
+/// A specialized `Result` type for authorization operations.
 pub type AuthResult<T> = Result<T, AuthError>;
 
 /// Represents errors that can occur during the authorization process.

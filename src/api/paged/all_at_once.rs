@@ -18,6 +18,9 @@ pub struct Paged<E> {
 }
 
 /// Collect data from a paged endpoint.
+///
+/// Use this for fine-grained control over pagination behavior.
+/// For common use cases, prefer [`paged_all`] or [`paged_with_limit`].
 pub fn paged<E>(endpoint: E, pagination: Pagination) -> Paged<E> {
     Paged {
         endpoint,
@@ -26,6 +29,22 @@ pub fn paged<E>(endpoint: E, pagination: Pagination) -> Paged<E> {
 }
 
 /// Collect all data from a paged endpoint.
+///
+/// This will make multiple API requests as needed to fetch all available items.
+///
+/// # Example
+///
+/// ```no_run
+/// use spotify_web_api::api::{paged_all, Query, playlists::GetCurrentUserPlaylists};
+/// use spotify_web_api::model::SimplifiedPlaylist;
+///
+/// # fn example(client: &impl spotify_web_api::api::Client) {
+/// // Get all of the current user's playlists
+/// let playlists: Vec<SimplifiedPlaylist> = paged_all(GetCurrentUserPlaylists::default())
+///     .query(client)
+///     .unwrap();
+/// # }
+/// ```
 pub fn paged_all<E>(endpoint: E) -> Paged<E> {
     paged(endpoint, Pagination::All)
 }

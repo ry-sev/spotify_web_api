@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 
+/// The type of a Spotify item.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum ItemType {
@@ -36,6 +37,7 @@ impl std::fmt::Display for ItemType {
     }
 }
 
+/// An image from Spotify (album art, user avatar, etc.).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Image {
     /// The source URL of the image.
@@ -48,6 +50,7 @@ pub struct Image {
     pub width: Option<u16>,
 }
 
+/// An icon image.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Icon {
     /// The source URL of the image.
@@ -60,18 +63,21 @@ pub struct Icon {
     pub width: Option<u16>,
 }
 
+/// A video thumbnail image.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct VideoThumbnail {
-    // The source URL of the image.
+    /// The source URL of the image.
     pub url: Option<String>,
 }
 
+/// External URLs for a Spotify object.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ExternalUrls {
     /// The [Spotify URL](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the object.
     pub spotify: String,
 }
 
+/// External IDs for a track (ISRC, EAN, UPC).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ExternalIds {
     /// [International Standard Recording Code](http://en.wikipedia.org/wiki/International_Standard_Recording_Code)
@@ -87,6 +93,7 @@ pub struct ExternalIds {
     pub upc: Option<String>,
 }
 
+/// Follower information for a user, artist, or playlist.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Followers {
     /// This will always be set to null, as the Web API does not support it at the moment.
@@ -96,6 +103,7 @@ pub struct Followers {
     pub total: usize,
 }
 
+/// The precision of a release date.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum ReleaseDatePrecision {
@@ -104,12 +112,14 @@ pub enum ReleaseDatePrecision {
     Day,
 }
 
+/// Content restrictions applied to an item.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Restrictions {
     /// The reason for the restriction.
     pub reason: String,
 }
 
+/// The type of copyright.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum CopyrightType {
     /// The copyright.
@@ -119,6 +129,7 @@ pub enum CopyrightType {
     P,
 }
 
+/// Copyright information for an album or show.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Copyright {
     /// The copyright text for this content.
@@ -129,6 +140,10 @@ pub struct Copyright {
     pub type_: CopyrightType,
 }
 
+/// A paginated response containing a list of items.
+///
+/// Use the `next` and `previous` URLs or the pagination helper functions
+/// to navigate through results.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Page<T> {
     /// A link to the Web API endpoint returning the full result of the request.
@@ -152,6 +167,7 @@ pub struct Page<T> {
     pub items: Vec<T>,
 }
 
+/// Cursors for cursor-based pagination.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Cursors {
     /// The cursor to use as key to find the next page of items.
@@ -163,6 +179,7 @@ pub struct Cursors {
     pub before: Option<String>,
 }
 
+/// Resume point for a podcast episode.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct ResumePoint {
     /// Whether or not the episode has been fully played by the user.
@@ -172,6 +189,7 @@ pub struct ResumePoint {
     pub resume_position_ms: u32,
 }
 
+/// A currently playing item, which can be either a track or an episode.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(untagged)]
 #[allow(clippy::large_enum_variant)]
@@ -245,6 +263,7 @@ impl TrackItem {
     }
 }
 
+/// Time range for fetching user's top items.
 #[derive(Debug, Default, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "snake_case")]
 pub enum TimeRange {
@@ -269,6 +288,7 @@ impl std::fmt::Display for TimeRange {
     }
 }
 
+/// The type of top items to fetch (artists or tracks).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum TopItemType {
@@ -285,6 +305,7 @@ impl std::fmt::Display for TopItemType {
     }
 }
 
+/// A user's top item, which can be either an artist or a track.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(untagged)]
 #[allow(clippy::large_enum_variant)]
@@ -293,8 +314,10 @@ pub enum TopItem {
     Track(super::Track),
 }
 
+/// A paginated list of the user's top items.
 pub type TopItems = Page<TopItem>;
 
+/// The type filter for fetching followed artists.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum FollowedArtistsType {
@@ -309,6 +332,7 @@ impl std::fmt::Display for FollowedArtistsType {
     }
 }
 
+/// The type of entity to follow (artist or user).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum FollowType {
@@ -327,6 +351,7 @@ impl std::fmt::Display for FollowType {
     }
 }
 
+/// Type of external content to include in search results.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum IncludeExternalType {

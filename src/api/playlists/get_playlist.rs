@@ -2,7 +2,6 @@ use crate::api::prelude::*;
 
 /// Get a playlist owned by a Spotify user.
 #[derive(Debug, Clone)]
-// #[endpoint(method = GET, path = "playlists/{id}")]
 pub struct GetPlaylist {
     /// The [Spotify ID](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) of the playlist.
     pub id: String,

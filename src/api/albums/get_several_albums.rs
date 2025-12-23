@@ -1,6 +1,7 @@
 use crate::api::prelude::*;
 
 /// Get Spotify catalog information for multiple albums identified by their Spotify IDs.
+#[derive(Debug, Clone)]
 pub struct GetSeveralAlbums {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the albums.
     pub ids: Vec<String>,

@@ -1,52 +1,120 @@
-name: Continuous Integration
+name: CI
 
 on:
-    push:
-    pull_request:
-        branches:
-            - main
-        paths-ignore:
-            - "**.md"
-            - ".env.template"
-            - ".gitattributes"
-            - ".gitignore"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "LICENSE*"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".gitattributes"
+      - ".gitignore"
+      - "**.md"
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - "LICENSE*"
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".gitattributes"
+      - ".gitignore"
+      - "**.md"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
-    CARGO_TERM_COLOR: always
-    CARGO_INCREMENTAL: 0
-    RUST_BACKTRACE: 1
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: 1
 
 jobs:
-    format_and_lint:
-        runs-on: ubuntu-latest
+  check:
+    name: Quick Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          components: rustfmt, clippy
 
-            - name: Set up Rust toolchain
-              uses: actions-rust-lang/setup-rust-toolchain@v1
-              with:
-                  toolchain: stable
-                  components: rustfmt, clippy
+      - name: Check formatting
+        run: cargo fmt --all -- --check
 
-            - name: Run cargo fmt
-              run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy --all --all-features --tests -- -D warnings
 
-            - name: Run Clippy
-              run: cargo clippy --all --all-features --tests -- -D warnings
+  test:
+    name: Test (${{ matrix.os }})
+    needs: check
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
-    tests:
-        runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-        steps:
-            - name: Checkout Code
-              uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
 
-            - name: Set up Rust toolchain
-              uses: actions-rust-lang/setup-rust-toolchain@v1
-              with:
-                  toolchain: stable
+      - name: Run tests
+        run: cargo test --all-features
 
-            - name: Run Tests
-              run: cargo test --all-features
+  features:
+    name: Feature Combinations
+    needs: check
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        features:
+          - ""
+          - "markets"
+          - "page_items"
+          - "markets,page_items"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Test with features '${{ matrix.features }}'
+        run: cargo test --features "${{ matrix.features }}"
+
+  msrv:
+    name: MSRV
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: "1.85"
+
+      - name: Check MSRV
+        run: cargo check --all-features
+
+  docs:
+    name: Documentation
+    needs: check
+    runs-on: ubuntu-latest
+    env:
+      RUSTDOCFLAGS: -D warnings
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Build documentation
+        run: cargo doc --no-deps --all-features

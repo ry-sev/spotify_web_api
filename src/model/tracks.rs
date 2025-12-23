@@ -3,6 +3,9 @@ use super::{
 };
 use serde::{Deserialize, Serialize};
 
+/// Linked track information for re-linked tracks.
+///
+/// Part of the response when Track Relinking is applied.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct LinkedFrom {
     /// Known external URLs for this item.
@@ -27,6 +30,7 @@ pub struct LinkedFrom {
     pub uri: Option<String>,
 }
 
+/// A full track object from the Spotify catalog.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Track {
     /// The album on which the track appears. The album object includes a link in href to full information about the album.

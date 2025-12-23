@@ -4,6 +4,10 @@ use super::{
 };
 use serde::{Deserialize, Serialize};
 
+/// Full audiobook chapter information from the Spotify catalog.
+///
+/// Contains complete details about a chapter including its parent audiobook,
+/// chapter number, release date, duration, and playback resume point.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Chapter {
     /// A list of the countries in which the audiobook can be played, identified by their [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
@@ -78,6 +82,10 @@ pub struct Chapter {
     pub audiobook: SimplifiedAudiobook,
 }
 
+/// Simplified audiobook chapter information with basic details only.
+///
+/// A lighter version of [`Chapter`] that omits the parent audiobook.
+/// Commonly returned when chapters are nested within audiobook objects.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedChapter {
     /// A list of the countries in which the audiobook can be played, identified by their [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.

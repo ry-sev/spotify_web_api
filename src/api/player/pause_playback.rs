@@ -28,7 +28,7 @@ impl Endpoint for PausePlayback {
 
     fn parameters(&self) -> QueryParams<'_> {
         let mut params = QueryParams::default();
-        params.push_opt("devide_id", self.device_id.as_ref());
+        params.push_opt("device_id", self.device_id.as_ref());
         params
     }
 }

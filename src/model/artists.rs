@@ -1,6 +1,10 @@
 use super::{Cursors, ExternalUrls, Followers, Image, ItemType};
 use serde::{Deserialize, Serialize};
 
+/// Full artist information from the Spotify catalog.
+///
+/// Contains complete details about an artist including their images, genres,
+/// popularity, and follower count.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Artist {
     /// Known external URLs for this artist.
@@ -38,6 +42,11 @@ pub struct Artist {
     pub uri: String,
 }
 
+/// Simplified artist information with basic details only.
+///
+/// A lighter version of [`Artist`] that omits images, genres, popularity,
+/// and follower information. Commonly returned when artists are nested within
+/// other objects like tracks or albums.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedArtist {
     /// Known external URLs for this artist.
@@ -81,6 +90,10 @@ pub struct Artists {
     pub artists: Vec<Option<Artist>>,
 }
 
+/// A cursor-based page of followed artists.
+///
+/// Used for paginating through the artists that the current user follows.
+/// Unlike standard pagination, this uses cursors for navigation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FollowedArtist {
     /// A link to the Web API endpoint returning the full result of the request.
@@ -101,6 +114,10 @@ pub struct FollowedArtist {
     pub items: Vec<Artist>,
 }
 
+/// Wrapper for the followed artists response.
+///
+/// Contains a [`FollowedArtist`] object with the paginated list of artists
+/// the current user follows.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FollowedArtists {
     pub artists: FollowedArtist,

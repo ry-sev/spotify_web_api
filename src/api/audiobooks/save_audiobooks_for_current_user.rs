@@ -2,12 +2,12 @@ use crate::api::prelude::*;
 
 /// Save one or more audiobooks to the current Spotify user's library.
 #[derive(Debug, Clone)]
-pub struct SaveAudiobooksforCurrentUser {
+pub struct SaveAudiobooksForCurrentUser {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the audiobooks.
     pub ids: Vec<String>,
 }
 
-impl<T, I> From<I> for SaveAudiobooksforCurrentUser
+impl<T, I> From<I> for SaveAudiobooksForCurrentUser
 where
     I: IntoIterator<Item = T>,
     T: Into<String>,
@@ -19,7 +19,7 @@ where
     }
 }
 
-impl Endpoint for SaveAudiobooksforCurrentUser {
+impl Endpoint for SaveAudiobooksForCurrentUser {
     fn method(&self) -> Method {
         Method::PUT
     }
@@ -57,7 +57,7 @@ mod tests {
 
         let client = SingleTestClient::new_raw(endpoint, "");
 
-        let endpoint = SaveAudiobooksforCurrentUser::from([
+        let endpoint = SaveAudiobooksForCurrentUser::from([
             "18yVqkdbdRvS24c0Ilj2ci",
             "1HGw3J3NxZO1TP1BTtVhpZ",
             "7iHfbu1YPACw6oZPAFJtqe",

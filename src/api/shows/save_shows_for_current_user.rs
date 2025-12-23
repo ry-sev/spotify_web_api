@@ -2,12 +2,12 @@ use crate::api::prelude::*;
 
 /// Save one or more shows to the current Spotify user's library.
 #[derive(Debug, Clone)]
-pub struct SaveShowsforCurrentUser {
+pub struct SaveShowsForCurrentUser {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the shows.
     pub ids: Vec<String>,
 }
 
-impl<T, I> From<I> for SaveShowsforCurrentUser
+impl<T, I> From<I> for SaveShowsForCurrentUser
 where
     I: IntoIterator<Item = T>,
     T: Into<String>,
@@ -19,7 +19,7 @@ where
     }
 }
 
-impl Endpoint for SaveShowsforCurrentUser {
+impl Endpoint for SaveShowsForCurrentUser {
     fn method(&self) -> Method {
         Method::PUT
     }
@@ -55,7 +55,7 @@ mod tests {
         let client = SingleTestClient::new_raw(endpoint, "");
 
         let endpoint =
-            SaveShowsforCurrentUser::from(["5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ"]);
+            SaveShowsForCurrentUser::from(["5CfCWKI5pZ28U0uOzXkDHe", "5as3aKmN2k11yfDDDSrvaZ"]);
 
         api::ignore(endpoint).query(&client).unwrap();
     }

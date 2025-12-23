@@ -2,7 +2,6 @@ use crate::api::prelude::*;
 
 /// Remove one or more shows from the Spotify user's library.
 #[derive(Debug, Clone)]
-// #[endpoint(method = DELETE, path = "me/shows")]
 pub struct RemoveUserSavedShows {
     /// A list of [Spotify IDs](https://developer.spotify.com/documentation/web-api/concepts/spotify-uris-ids) for the shows.
     pub ids: Vec<String>,

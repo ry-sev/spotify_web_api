@@ -3,6 +3,13 @@ use serde::{Deserialize, Serialize};
 /// An [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country code.
 pub type Market = String;
 
+/// Returns the country name for a given ISO 3166-1 alpha-2 country code.
+///
+/// # Arguments
+/// * `country_code` - A two-letter ISO 3166-1 alpha-2 country code (e.g., "US", "GB", "JP").
+///
+/// # Returns
+/// The full country name, or "Unknown" if the code is not recognized.
 pub fn country_name(country_code: &str) -> &'static str {
     match country_code {
         "AD" => "Andorra",

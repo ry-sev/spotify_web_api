@@ -1,6 +1,11 @@
 use super::{Copyright, ExternalUrls, Image, ItemType, Market, Page, SimplifiedEpisode};
 use serde::{Deserialize, Serialize};
 
+/// Full show (podcast) information from the Spotify catalog.
+///
+/// Contains complete details about a show including its episodes
+/// (when the `page_items` feature is enabled), description, publisher,
+/// and available markets.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct Show {
     /// A list of the countries in which the show can be played, identified by their [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
@@ -65,6 +70,10 @@ pub struct Show {
     pub episodes: Page<SimplifiedEpisode>,
 }
 
+/// Simplified show (podcast) information with basic details only.
+///
+/// A lighter version of [`Show`] that omits the episodes page.
+/// Commonly returned when shows are nested within other objects like episodes.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SimplifiedShow {
     /// A list of the countries in which the show can be played, identified by their [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
@@ -150,6 +159,9 @@ impl From<Show> for SimplifiedShow {
     }
 }
 
+/// A show saved to the current user's library.
+///
+/// Contains the timestamp when the show was saved and the show details.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct SavedShow {
     /// The date and time the show was saved. Timestamps are returned in ISO 8601 format as Coordinated Universal Time (UTC)

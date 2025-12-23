@@ -1,0 +1,55 @@
+name: Bug Report
+description: Report an error or unexpected behavior
+labels: ["bug"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Bug report form
+      options:
+        - label: I have done a basic search of the issue tracker to find any existing issues that are similar.
+        - label: I have checked that my version is at least the latest stable release available via my installation method.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: Try to make it easy for us to understand what problem you are encountering.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: Steps to reproduce the behavior (including examples or screenshots of the observed behavior).
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+      placeholder: I expected nu to...
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Platform
+      description: What operating system and architecture are you using? (see `uname -orsm`)
+      placeholder: e.g., macOS 14 arm64, Windows 11 x86_64, Ubuntu 20.04 amd64
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Version
+      description: What version of harvest are you using?
+      placeholder: e.g., 0.1.0
+    validations:
+      required: true

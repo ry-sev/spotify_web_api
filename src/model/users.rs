@@ -1,6 +1,7 @@
 use super::{ExternalUrls, Followers, Image, ItemType, Market};
 use serde::{Deserialize, Serialize};
 
+/// The user's Spotify subscription type.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "lowercase")]
 pub enum SubscriptionType {
@@ -29,6 +30,10 @@ pub struct ExplicitContent {
     pub filter_locked: bool,
 }
 
+/// The currently authenticated user's profile.
+///
+/// Contains additional private information compared to [`UserProfile`],
+/// such as email and country (requires appropriate scopes).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct CurrentUserProfile {
     /// The country of the user, as set in the user's account profile.
@@ -80,6 +85,7 @@ pub struct CurrentUserProfile {
     pub uri: String,
 }
 
+/// A public user profile.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct UserProfile {
     /// The name displayed on the user's profile. None if not available.
@@ -108,6 +114,7 @@ pub struct UserProfile {
     pub uri: String,
 }
 
+/// A simplified user reference (used in playlist ownership, etc.).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct UserReference {
     /// Known public external URLs for this user.
@@ -123,7 +130,7 @@ pub struct UserReference {
     /// The Spotify user ID for this user.
     pub id: String,
 
-    // The object type: "user"
+    /// The object type: "user"
     #[serde(rename = "type")]
     pub type_: ItemType,
 
