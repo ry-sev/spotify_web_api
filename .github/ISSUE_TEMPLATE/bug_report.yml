@@ -49,7 +49,7 @@ body:
   - type: input
     attributes:
       label: Version
-      description: What version of harvest are you using?
-      placeholder: e.g., 0.1.0
+      description: What version of spotify_web_api are you using?
+      placeholder: e.g., 0.2.0
     validations:
       required: true
