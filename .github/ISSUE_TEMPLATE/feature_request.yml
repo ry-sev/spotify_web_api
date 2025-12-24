@@ -7,7 +7,7 @@ body:
       label: Basics
       options:
         - label: I have done a basic search through the issue tracker to find similar or related issues.
-        - label: I have made myself familiar with the available features of harvest for the particular area this enhancement request touches.
+        - label: I have made myself familiar with the available features of spotify_web_api for the particular area this enhancement request touches.
 
   - type: textarea
     attributes:
